@@ -7,7 +7,7 @@ using Hangfire.Server;
 
 namespace HangfireAutofacDemo.Jobs
 {
-    public class TenantJobAttribute : JobFilterAttribute, IServerFilter
+    public class MultitenantJobAttribute : JobFilterAttribute, IServerFilter
     {
         public void OnPerforming(PerformingContext filterContext)
         {
