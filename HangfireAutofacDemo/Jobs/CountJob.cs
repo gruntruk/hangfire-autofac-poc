@@ -8,6 +8,7 @@ using Microsoft.Azure.KeyVault.Models;
 
 namespace HangfireAutofacDemo.Jobs
 {
+    [TenantJob]
     public class CountJob
     {
         private readonly CountService _countService;
@@ -19,7 +20,7 @@ namespace HangfireAutofacDemo.Jobs
             _otherService = otherService;
         }
 
-        public void Execute()
+        public void Execute(string tenantId)
         {
             Debug.WriteLine($"Executing: {_countService.Next()}");
             _otherService.DoSomething();

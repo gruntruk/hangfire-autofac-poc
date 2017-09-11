@@ -24,7 +24,8 @@ namespace HangfireAutofacDemo.Controllers
 
         public IActionResult Index()
         {
-            _client.Enqueue<CountJob>(v => v.Execute());
+            // enqueue the job and propagate tenant context to it for use by the job filter
+            _client.Enqueue<CountJob>(v => v.Execute(Request.Query["tenant"].FirstOrDefault()));
             ViewData["Count"] = _countService.Next();
             return View();
         }

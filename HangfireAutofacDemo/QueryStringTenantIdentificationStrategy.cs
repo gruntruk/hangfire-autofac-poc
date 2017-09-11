@@ -1,4 +1,5 @@
-﻿using Autofac.Multitenant;
+﻿using System.Threading;
+using Autofac.Multitenant;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
@@ -7,6 +8,8 @@ namespace HangfireAutofacDemo
     public class QueryStringTenantIdentificationStrategy : ITenantIdentificationStrategy
     {
         private readonly IHttpContextAccessor _contextAccessor;
+
+        public static AsyncLocal<string> CurrentTenantId { get; } = new AsyncLocal<string>();
 
         public QueryStringTenantIdentificationStrategy(IHttpContextAccessor contextAccessor)
         {
@@ -17,8 +20,8 @@ namespace HangfireAutofacDemo
         {
             if (_contextAccessor.HttpContext == null)
             {
-                tenantId = null;
-                return false;
+                tenantId = CurrentTenantId.Value;
+                return tenantId != null;
             }
 
             if (_contextAccessor.HttpContext.Request.Query.TryGetValue("tenant", out var values))
