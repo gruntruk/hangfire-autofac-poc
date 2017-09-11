@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.AspNetCore.Multitenant" Version="1.0.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.6.16" />
     <PackageReference Include="HangFire.Autofac" Version="2.3.1" />

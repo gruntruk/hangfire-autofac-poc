@@ -23,8 +23,12 @@ namespace HangfireAutofacDemo
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureServices(v => v.AddAutofac())
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseAutofacMultitenantRequestServices(() => Startup.ApplicationContainer)
+                .UseIISIntegration()
                 .UseStartup<Startup>()
+                .UseApplicationInsights()
                 .Build();
     }
 }
